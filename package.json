@@ -32,6 +32,6 @@
   },
   "devDependencies": {
     "handlebars-jest": "^1.0.0",
-    "nodemon": "^2.0.22"
+    "nodemon": "^3.0.3"
   }
 }
