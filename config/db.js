@@ -9,7 +9,7 @@ const connectDb = () => {
             useUnifiedTopology: true,
         })
         .then(() => {
-            console.log('Kết nối MongoDB thành công');
+            console.log('Kết nối MongoDB  thành công');
         })
         .catch((err) => {
             console.error('Lỗi kết nối MongoDB:', err);
