@@ -108,10 +108,10 @@ app.use(cookieParser());
 
 concentDb();
 
-// app.use('/api', Login);
-// app.use('/discount', Discoun);
-// app.use('/apiad', Loginad);
-// app.use('/order', orderControllers);
-// app.use('/products', ProducRouter);
+app.use('/api', Login);
+app.use('/discount', Discoun);
+app.use('/apiad', Loginad);
+app.use('/order', orderControllers);
+app.use('/products', ProducRouter);
 
 app.listen(port, () => console.log(`App listening at 192.168.164.1:${port}`));
