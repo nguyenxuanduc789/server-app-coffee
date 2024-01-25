@@ -13,6 +13,7 @@ const cookieParser = require('cookie-parser');
 const engines = require('consolidate');
 const paypal = require('paypal-rest-sdk');
 const path = require('path'); // Add this line to include the 'path' module
+const coffeeshop = require('./controllers/coffeeshop');
 
 app.engine('ejs', require('ejs').renderFile);
 app.set('views', path.join(__dirname, 'views'));
@@ -113,5 +114,6 @@ app.use('/discount', Discoun);
 app.use('/apiad', Loginad);
 app.use('/order', orderControllers);
 app.use('/products', ProducRouter);
+app.use('/coffeeshop', coffeeshop);
 
 app.listen(port, () => console.log(`App listening at 192.168.164.1:${port}`));
