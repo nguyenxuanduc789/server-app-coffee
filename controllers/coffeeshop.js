@@ -14,27 +14,42 @@ paypal.configure({
     client_secret: 'EAQXgiFzv9B0_JhBYRiGu1RUeBbaoMgQaYKxL_3v0zUOpaVH04DZw5B_y1BXk1qwqW_0cwP7VJauFT2V',
 });
 router.post('/addshop', async (req, res) => {
-    const { usernameshop, latitude, longitude, name, prices, image, description, included, products } = req.body;
-    // if (!Array.isArray(prices) || prices.some((item) => !item.size || !item.price)) {
-    //     return res.status(400).json({ error: 'Prices array is invalid' });
-    // }
+    const { usernameshop, latitude, longitude, total } = req.body;
     try {
         // Tạo một cửa hàng mới
         const newCoffeeShop = new Coffeeshop({
             usernameshop,
             latitude,
             longitude,
-            name,
-            products,
-            prices,
-            image,
-            description,
-            included,
+            total: 0,
         });
         // Lưu vào cơ sở dữ liệu
         const savedCoffeeShop = await newCoffeeShop.save();
 
         res.json({ success: true, coffeeShop: savedCoffeeShop });
+    } catch (err) {
+        res.status(500).json(err);
+    }
+});
+
+router.post('/addproduct', async (req, res) => {
+    const { usernameshop, product } = req.body;
+
+    try {
+        // Find the coffee shop by usernameshop
+        const coffeeShop = await Coffeeshop.findOne({ usernameshop });
+
+        if (!coffeeShop) {
+            return res.status(404).json({ success: false, message: 'Coffee shop not found' });
+        }
+
+        // Add the product to the coffee shop
+        coffeeShop.products.push(product);
+
+        // Save the updated coffee shop
+        const updatedCoffeeShop = await coffeeShop.save();
+
+        res.json({ success: true, coffeeShop: updatedCoffeeShop });
     } catch (err) {
         res.status(500).json(err);
     }

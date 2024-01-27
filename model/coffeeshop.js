@@ -20,6 +20,7 @@ const CoffeeshopSchema = new Schema(
         usernameshop: { type: String, required: true, unique: true },
         latitude: { type: Number, required: true },
         longitude: { type: Number, required: true },
+        total: { type: Number, required: true },
         products: { type: [ProductSchema], required: true }, // Corrected field name
     },
     { timestamps: true },
