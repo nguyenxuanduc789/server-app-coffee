@@ -37,14 +37,8 @@ router.post('/upload', upload.single('image'), (req, res) => {
     if (!req.file) {
         return res.status(400).send('No files were uploaded.');
     }
-
-    // Tạo URL cho ảnh đã tải lên
-    const imageUrl = `https://app-coffee.onrender.com/uploads/${req.file.filename}`;
-
-    // Trả về đường dẫn URL của ảnh
-    res.json({ success: true, imageUrl });
+    res.send('File uploaded successfully.');
 });
-
 router.post('/addproduct', upload.single('image'), async (req, res) => {
     const { usernameshop, product } = req.body;
     try {

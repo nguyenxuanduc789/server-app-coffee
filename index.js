@@ -101,7 +101,6 @@ app.get('/success', (req, res) => {
 app.get('/cancel', (req, res) => {
     res.render('cancel');
 });
-app.use('/uploads', express.static('uploads'));
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
