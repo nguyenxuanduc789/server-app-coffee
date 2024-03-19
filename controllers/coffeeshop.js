@@ -39,7 +39,7 @@ router.post('/upload', upload.single('image'), (req, res) => {
     }
 
     // Tạo URL cho ảnh đã tải lên
-    const imageUrl = `https://yourdomain.com/uploads/${req.file.filename}`;
+    const imageUrl = `https://app-coffee.onrender.com/uploads/${req.file.filename}`;
 
     // Trả về đường dẫn URL của ảnh
     res.json({ success: true, imageUrl });
