@@ -3,6 +3,7 @@ const multer = require('multer');
 const { GridFsStorage } = require('multer-gridfs-storage');
 const Grid = require('gridfs-stream');
 const crypto = require('crypto');
+const fs = require('fs');
 const path = require('path');
 const Coffeeshop = require('../model/coffeeshop');
 const CryptoJS = require('crypto-js');
@@ -38,6 +39,21 @@ router.post('/upload', upload.single('image'), (req, res) => {
         return res.status(400).send('No files were uploaded.');
     }
     res.send('File uploaded successfully.');
+});
+router.get('/getallimages', (req, res) => {
+    const uploadDirectory = 'uploads/';
+
+    fs.readdir(uploadDirectory, (err, files) => {
+        if (err) {
+            console.error('Error reading upload directory:', err);
+            return res.status(500).json({ success: false, message: 'Internal server error' });
+        }
+
+        const imageUrls = files.map((file) => {
+            return `${req.protocol}://${req.get('host')}/${uploadDirectory}${file}`;
+        });
+        res.json({ success: true, images: imageUrls });
+    });
 });
 router.post('/addproduct', upload.single('image'), async (req, res) => {
     const { usernameshop, product } = req.body;
