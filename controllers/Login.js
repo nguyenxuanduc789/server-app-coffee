@@ -13,6 +13,7 @@ paypal.configure({
     client_id: 'Acoy1LSwh_eUjhKTb2PIBreXCGQEYW39ELKHgve4-AA8C4P23Gm8iPTk0nqBKC-kCwFEylSVuHlV1UpI',
     client_secret: 'EAQXgiFzv9B0_JhBYRiGu1RUeBbaoMgQaYKxL_3v0zUOpaVH04DZw5B_y1BXk1qwqW_0cwP7VJauFT2V',
 });
+const Coffeeshop = require('../model/coffeeshop');
 //REGISTER ADMIN
 router.post('/registeradmin', async (req, res) => {
     const { username, email, password } = req.body;
@@ -83,11 +84,26 @@ router.post('/login', async (req, res) => {
         const pass = await User.findOne({ password: req.body.password });
         if (!pass) return res.status(400).json({ message: 'Email or password is incorrect 2' });
         console.log(user.isAdmin);
-        if (!user.isAdmin) {
+        // if (!user.isAdmin) {
+        //     const { age, gender } = user;
+        //     return res.json({ message: 'thanh cong 1', age, gender });
+        // } else {
+        //     res.json('thanh cong 2');
+        // }
+        if (user.isAdmin) {
+            const coffeeshop = await Coffeeshop.find({ username: user.username });
+            if (coffeeshop.length === 0) {
+                return res.status(404).json({ message: 'No products found for the admin user' });
+            } else {
+                const coffeeshopnames = coffeeshop.map((coffeeshop) => coffeeshop.usernameshop).join(', ');
+                const latitudes = coffeeshop.map((coffeeshop) => coffeeshop.latitude).join(', ');
+                const longitudes = coffeeshop.map((coffeeshop) => coffeeshop.longitude).join(', ');
+                console.log('Coffeeshop Names:', coffeeshopnames, latitudes, longitudes);
+                return res.json({ isAdmin: true, coffeeshopnames, latitudes, longitudes, message: 'thanh cong 2' });
+            }
+        } else {
             const { age, gender } = user;
             return res.json({ message: 'thanh cong 1', age, gender });
-        } else {
-            res.json('thanh cong 2');
         }
     } catch (err) {
         res.status(500).json(err);

@@ -17,11 +17,17 @@ const ProductSchema = new Schema({
 });
 const CoffeeshopSchema = new Schema(
     {
+        username: { type: String, required: true, unique: true },
+        password: { type: String, required: true },
+        isAdmin: {
+            type: Boolean,
+            default: false,
+        },
         usernameshop: { type: String, required: true, unique: true },
         latitude: { type: Number, required: true },
         longitude: { type: Number, required: true },
         total: { type: Number, required: true },
-        products: { type: [ProductSchema], required: true }, // Corrected field name
+        products: { type: [ProductSchema], required: true },
     },
     { timestamps: true },
 );

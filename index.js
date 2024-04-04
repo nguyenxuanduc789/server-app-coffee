@@ -70,7 +70,7 @@ app.get('/paypal', (req, res) => {
         }
     });
 });
-
+app.use('/uploads', express.static('uploads'));
 app.get('/success', (req, res) => {
     var PayerID = req.query.PayerID;
     var paymentId = req.query.paymentId;
