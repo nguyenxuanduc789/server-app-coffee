@@ -15,6 +15,11 @@ const ProductSchema = new Schema({
     updatedAt: { type: Date, default: Date.now },
     deletedAt: { type: Date, default: null },
 });
+const MessageSchema = new Schema({
+    sender: String,
+    content: String,
+    timestamp: { type: Date, default: Date.now },
+});
 const CoffeeshopSchema = new Schema(
     {
         username: { type: String, required: true, unique: true },
@@ -28,6 +33,7 @@ const CoffeeshopSchema = new Schema(
         longitude: { type: Number, required: true },
         total: { type: Number, required: true },
         products: { type: [ProductSchema], required: true },
+        message: { type: [MessageSchema], required: true },
     },
     { timestamps: true },
 );

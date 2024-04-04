@@ -1,5 +1,7 @@
 const express = require('express');
 const app = express();
+const http = require('http');
+const server = http.createServer(app);
 const port = 3000;
 const concentDb = require('./config/db');
 const bodyParser = require('body-parser');
@@ -10,11 +12,11 @@ const Discoun = require('./controllers/discountcontrollers');
 const orderControllers = require('./controllers/orderControllers');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
-const engines = require('consolidate');
-const paypal = require('paypal-rest-sdk');
-const path = require('path'); // Add this line to include the 'path' module
+const path = require('path'); // Thêm dòng này để bao gồm mô-đun 'path'
 const coffeeshop = require('./controllers/coffeeshop');
-
+const { initializeSocket } = require('./socket/socket');
+const paypal = require('paypal-rest-sdk');
+initializeSocket(server);
 app.engine('ejs', require('ejs').renderFile);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -116,4 +118,4 @@ app.use('/order', orderControllers);
 app.use('/products', ProducRouter);
 app.use('/coffeeshop', coffeeshop);
 
-app.listen(port, () => console.log(`App listening at 192.168.164.1:${port}`));
+server.listen(port, () => console.log(`App listening at 192.168.164.1:${port}`));
